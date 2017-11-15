@@ -16,9 +16,9 @@ public class SubCategoryData implements SubCategory {
 
     List<MealData> meals;
 
-    float priceGuest;
-    float priceStudent;
     float priceStudentBonus;
+    float priceStudent;
+    float priceGuest;
     
     Set<FoodCharacteristic> attachments;
 }

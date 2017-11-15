@@ -34,9 +34,9 @@ public class JkuClassicSubparser {
         String pricesString = categoryElement.select(">.category-price").text();
         Matcher m = CLASSIC_PRICE_PATTERN.matcher(pricesString);
         if (m.matches()) {
-            priceGuest = Float.parseFloat(m.group(1).replace(",", "."));
+            priceStudentBonus = Float.parseFloat(m.group(1).replace(",", "."));
             priceStudent = Float.parseFloat(m.group(2).replace(",", "."));
-            priceStudentBonus = Float.parseFloat(m.group(3).replace(",", "."));
+            priceGuest = Float.parseFloat(m.group(3).replace(",", "."));
         }
 
         Elements icons = categoryElement.select("> .category-icons img");

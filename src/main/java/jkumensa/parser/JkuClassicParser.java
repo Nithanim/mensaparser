@@ -66,19 +66,19 @@ public class JkuClassicParser {
                 List<List<Node>> cleaned = Cleaner.splitFuckedUpFreeformUserInput(catcontent.children());
                 List<MealData> meals = parseClassicMeals(cleaned);
 
-                float priceGuest = -1;
-                float priceStudent = -1;
                 float priceStudentBonus = -1;
+                float priceStudent = -1;
+                float priceGuest = -1;
 
                 String pricesString = categoryElement.select(">.category-price").text();
                 Matcher m = CLASSIC_PRICE_PATTERN.matcher(pricesString);
                 if (m.matches()) {
-                    priceGuest = Float.parseFloat(m.group(1).replace(",", "."));
+                    priceStudentBonus = Float.parseFloat(m.group(1).replace(",", "."));
                     priceStudent = Float.parseFloat(m.group(2).replace(",", "."));
-                    priceStudentBonus = Float.parseFloat(m.group(3).replace(",", "."));
+                    priceGuest = Float.parseFloat(m.group(3).replace(",", "."));
                 }
 
-                SubCategoryData s = new SubCategoryData("Classic", meals, priceGuest, priceStudent, priceStudentBonus, Collections.emptySet());
+                SubCategoryData s = new SubCategoryData("Classic", meals, priceStudentBonus, priceStudent, priceGuest, Collections.emptySet());
                 subcats.add(s);
             }
         }

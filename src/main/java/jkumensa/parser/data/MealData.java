@@ -1,12 +1,12 @@
 package jkumensa.parser.data;
 
 import java.util.Set;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import jkumensa.parser.i.AllergyCode;
 import jkumensa.parser.i.FoodCharacteristic;
 import jkumensa.parser.i.Meal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +14,9 @@ import jkumensa.parser.i.Meal;
 public class MealData implements Meal {
     String title;
 
-    float priceGuest;
-    float priceStudent;
     float priceStudentBonus;
+    float priceStudent;
+    float priceGuest;
 
     Set<AllergyCode> allergyCodes;
     Set<FoodCharacteristic> attachments;

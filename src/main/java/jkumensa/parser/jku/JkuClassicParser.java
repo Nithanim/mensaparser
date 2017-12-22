@@ -1,4 +1,4 @@
-package jkumensa.parser;
+package jkumensa.parser.jku;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package jkumensa.parser;
+package jkumensa.parser.jku;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,9 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CleanerTest {
-
-    public CleanerTest() {
-    }
 
     @BeforeClass
     public static void setUpClass() {

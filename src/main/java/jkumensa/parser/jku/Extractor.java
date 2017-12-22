@@ -1,4 +1,4 @@
-package jkumensa.parser;
+package jkumensa.parser.jku;
 
 import java.util.EnumSet;
 import java.util.List;

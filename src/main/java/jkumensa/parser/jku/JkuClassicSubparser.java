@@ -1,4 +1,4 @@
-package jkumensa.parser;
+package jkumensa.parser.jku;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static jkumensa.parser.Extractor.ALLERGY_PATTERN;
+import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
 import jkumensa.parser.data.MealData;
 import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaMealParsingException;

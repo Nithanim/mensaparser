@@ -1,8 +1,7 @@
-package jkumensa;
+package jkumensa.parser.jku;
 
 import java.io.IOException;
 import java.util.List;
-import jkumensa.parser.JkuMensaParser;
 import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MealData;
 import jkumensa.parser.data.MensaDayData;
@@ -28,22 +27,5 @@ public class Main {
                 }
             }
         }
-
-        /*try (DbConnector dbc = new DbConnector()) {
-            dbc.connect();
-
-            MensaDayData day = a.get(0);
-            String mensa = "JKU";
-
-            //dbc.dsl().transaction(() -> { //Not working for single user sqlite
-            MensaRecord mensaRecord = dbc.dsl().insertInto(MENSA)
-                .columns(MENSA.NAME, MENSA.CAT)
-                .values(mensa, day.getCategories().get(1).getTitle())
-                .returning(MENSA.ID)
-                .fetchOne();
-
-            int id = mensaRecord.getId();
-            //});
-        }*/
     }
 }

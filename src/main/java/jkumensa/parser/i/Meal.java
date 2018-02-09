@@ -7,5 +7,5 @@ public interface Meal extends Priced {
 
     Set<AllergyCode> getAllergyCodes();
 
-    Set<FoodCharacteristic> getAttachments();
+    Set<FoodCharacteristic> getFoodCharacteristics();
 }

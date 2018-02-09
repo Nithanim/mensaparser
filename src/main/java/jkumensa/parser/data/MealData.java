@@ -19,5 +19,5 @@ public class MealData implements Meal {
     float priceGuest;
 
     Set<AllergyCode> allergyCodes;
-    Set<FoodCharacteristic> attachments;
+    Set<FoodCharacteristic> foodCharacteristics;
 }

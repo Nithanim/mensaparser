@@ -22,7 +22,7 @@ public class Main {
                     System.out.println("\t\t" + sub.getTitle() + " [" + sub.getPriceGuest() + '/' + sub.getPriceStudent() + '/' + sub.getPriceStudentBonus() + "] " + sub.getAttachments());
                     
                     for(MealData m : sub.getMeals()) {
-                        System.out.println("\t\t\t" + m.getTitle() + " [" + m.getPriceGuest() + '/' + m.getPriceStudent() + '/' + m.getPriceStudentBonus() + "] " + m.getAllergyCodes() + " " + m.getAttachments());
+                        System.out.println("\t\t\t" + m.getTitle() + " [" + m.getPriceGuest() + '/' + m.getPriceStudent() + '/' + m.getPriceStudentBonus() + "] " + m.getAllergyCodes() + " " + m.getFoodCharacteristics());
                     }
                 }
             }

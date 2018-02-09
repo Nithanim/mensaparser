@@ -373,7 +373,7 @@ public class KhgTest {
         Assert.assertEquals(mealExpected.getPriceStudentBonus(), mealActual.getPriceStudentBonus(), 0.1);
         Assert.assertEquals(mealExpected.getPriceStudent(), mealActual.getPriceStudent(), 0.1);
         Assert.assertEquals(mealExpected.getPriceGuest(), mealActual.getPriceGuest(), 0.1);
-        Assert.assertEquals(mealExpected.getAttachments(), mealActual.getAttachments());
+        Assert.assertEquals(mealExpected.getFoodCharacteristics(), mealActual.getFoodCharacteristics());
         Assert.assertEquals(mealExpected.getAllergyCodes(), mealActual.getAllergyCodes());
     }
 }

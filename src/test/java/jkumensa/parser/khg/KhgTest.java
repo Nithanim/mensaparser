@@ -32,10 +32,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Apfel-Curry Suppe, pikanter Hirseauflauf mit Tomatensauce und Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Apfel-Curry Suppe, Putenfilet in Kürbiskernpanade mit Petersilerdäpfel und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Apfel-Curry Suppe, pikanter Hirseauflauf mit Tomatensauce und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Apfel-Curry Suppe, Putenfilet in Kürbiskernpanade mit Petersilerdäpfel und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -51,10 +58,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Erdäpfelsuppe, Thunfisch oder Gemüselasagne mit Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Erdäpfelsuppe. Züricher Geschnetzeltes vom Schwein mit Reis und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Erdäpfelsuppe, Thunfisch oder Gemüselasagne mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Erdäpfelsuppe. Züricher Geschnetzeltes vom Schwein mit Reis und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -70,10 +84,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Hafer-Lauchsuppe, Spaghetti mit Linsen-Gemüse.Bolognese und Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Haer-Lauchsuppe, Montafoner Hendlfilet mit Spinatspätzle und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Hafer-Lauchsuppe, Spaghetti mit Linsen-Gemüse.Bolognese und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Haer-Lauchsuppe, Montafoner Hendlfilet mit Spinatspätzle und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -89,10 +110,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Buchweizen-Frittatensuppe, Topfennockerl mit Apfelmus", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Buchweizen-Frittatensuppe, gekochtes Rindfleisch mit Semmelkren und Erdäpfelschmarren", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Buchweizen-Frittatensuppe, Topfennockerl mit Apfelmus", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Buchweizen-Frittatensuppe, gekochtes Rindfleisch mit Semmelkren und Erdäpfelschmarren", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -108,10 +136,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Dinkel-Grießschöberlsuppe, Krautfleckerl mit Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Dinkel-Grießschöberlsuppe. Chilli con Carne mit Gebäck", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Dinkel-Grießschöberlsuppe, Krautfleckerl mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Dinkel-Grießschöberlsuppe. Chilli con Carne mit Gebäck", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -139,11 +174,25 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Kohlsuppe, Gemüse-Mozzarellstrudel mit Tomatenragout und Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Kohlsuppe, Wiener Schnitzel vom österr. Schwein mit Petersilerdäpfel und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Mascarpone-Orangencreme", -1, -1, 1.3f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Kohlsuppe, Gemüse-Mozzarellstrudel mit Tomatenragout und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Kohlsuppe, Wiener Schnitzel vom österr. Schwein mit Petersilerdäpfel und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Mascarpone-Orangencreme", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    -1, -1, 1.3f,
                                     Collections.emptySet()
                                 )
                             )
@@ -159,11 +208,25 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Kürbiskernknödelsuppe, Spinat-Nudelauflauf mit Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Kürbiskernknödelsuppe, österr. Brathendl mit Reis und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Topfen-Pfirsichstrudel", -1, -1, 1.3f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Kürbiskernknödelsuppe, Spinat-Nudelauflauf mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Kürbiskernknödelsuppe, österr. Brathendl mit Reis und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Topfen-Pfirsichstrudel", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    -1, -1, 1.3f,
                                     Collections.emptySet()
                                 )
                             )
@@ -179,10 +242,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Karotten-Ingwersuppe, Dinkelreislaibchen mit Kohlrabiragout und Salat", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Karotten-Ingwersuppe, österr. Puten-Wachauer-Rieslingschnitzel mit Vollkornhörnchen und Salat", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Karotten-Ingwersuppe, Dinkelreislaibchen mit Kohlrabiragout und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Karotten-Ingwersuppe, österr. Puten-Wachauer-Rieslingschnitzel mit Vollkornhörnchen und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -198,10 +268,17 @@ public class KhgTest {
                                 new SubCategoryData(
                                     null,
                                     Arrays.asList(
-                                        new MealData("Ab heute ist unsere Mensa geschlossen!", 4f, -1, 5.25f, Collections.emptySet(), Collections.emptySet()),
-                                        new MealData("Am 8. Jänner 2018 kochen wir wieder gerne für Sie!", 5f, -1, 6.25f, Collections.emptySet(), Collections.emptySet())
+                                        new MealData("Ab heute ist unsere Mensa geschlossen!", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                                     ),
-                                    -1, -1, -1,
+                                    4f, -1, 5.25f,
+                                    Collections.emptySet()
+                                ),
+                                new SubCategoryData(
+                                    null,
+                                    Arrays.asList(
+                                        new MealData("Am 8. Jänner 2018 kochen wir wieder gerne für Sie!", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
+                                    ),
+                                    5f, -1, 6.25f,
                                     Collections.emptySet()
                                 )
                             )
@@ -219,7 +296,7 @@ public class KhgTest {
                                     Arrays.asList(
                                         new MealData(
                                             "Wir wünschen allen unseren Gästen ein frohes Weihnachtsfest und alles Gute für das Jahr 2018",
-                                            -1, -1, -1, 
+                                            -1, -1, -1,
                                             Collections.emptySet(), Collections.emptySet())
                                     ),
                                     -1, -1, -1,

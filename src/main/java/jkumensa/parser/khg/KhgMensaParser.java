@@ -23,7 +23,6 @@ import org.jsoup.select.Elements;
 
 public class KhgMensaParser {
     private static final Pattern DATE_PATTERN = Pattern.compile("(\\d\\d)\\.[^\\d]*(\\d\\d)\\.(?:(\\d\\d)\\.|[^A-Z]*([A-Za-z]*))[^\\d]*(\\d\\d\\d\\d)");
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.GERMAN);
 
     public List<MensaDayData> parse(Document doc) {
         Element container = doc.select(".modTeaser .swslang").first();
@@ -58,21 +57,18 @@ public class KhgMensaParser {
             int dayOffset = Weekday.valueOf(weekday).ordinal();
             LocalDate date = mondayDate.plusDays(dayOffset);
 
-            List<MealData> meals = new ArrayList<>(3);
-
+            List<SubCategoryData> subCategories = new ArrayList<>(2 + 1);
             tds.remove(0);
             if (tds.get(0).text().length() > 5 /*easy empty check because of nbsp and other funny things*/) {
-                meals.add(parseMeal(tds));
+                subCategories.add(parseSubCat(tds));
             }
             for (int i = 0; i < rowspan - 1 && trIt.hasNext() /*fix for rowspan without having enough elements*/; i++) {
                 tds = trIt.next().select(">td");
                 if (tds.get(0).text().length() > 5) {
-                    meals.add(parseMeal(tds));
+                    subCategories.add(parseSubCat(tds));
                 }
             }
 
-            List<SubCategoryData> subCategories = new ArrayList<>(1);
-            subCategories.add(new SubCategoryData(null, meals, -1, -1, -1, Collections.emptySet()));
             List<CategoryData> categories = new ArrayList<>(1);
             categories.add(new CategoryData(null, subCategories));
             mensaDays.add(new MensaDayData(date, categories));
@@ -94,7 +90,7 @@ public class KhgMensaParser {
         if (monthString != null) {
             DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM", Locale.GERMAN);
             ym = YearMonth.of(year, f.parse(monthString).get(ChronoField.MONTH_OF_YEAR));
-            
+
         } else if (monthInt != null) {
             ym = YearMonth.of(year, Integer.valueOf(monthInt));
         } else {
@@ -104,11 +100,15 @@ public class KhgMensaParser {
         return mondayDate;
     }
 
-    private MealData parseMeal(List<Element> tds) {
+    private SubCategoryData parseSubCat(List<Element> tds) {
         String title = cleanString(tds.get(0).text());
         Float bonusPrice = parseFloat(tds.get(1).text());
         Float normalPrice = parseFloat(tds.get(2).text());
-        return new MealData(title, bonusPrice, -1, normalPrice, Collections.emptySet(), Collections.emptySet());
+        MealData meal = new MealData(title, -1, -1, -1, Collections.emptySet(), Collections.emptySet());
+        ArrayList<MealData> meals = new ArrayList<>(3);
+        meals.add(meal);
+
+        return new SubCategoryData(null, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
     }
 
     private float parseFloat(String s) {

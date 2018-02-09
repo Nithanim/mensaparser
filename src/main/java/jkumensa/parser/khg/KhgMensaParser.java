@@ -43,25 +43,7 @@ public class KhgMensaParser {
         Element dateContainer = prev;
         Element dataTable = curr;
 
-        Matcher m = DATE_PATTERN.matcher(((TextNode) dateContainer.childNodes().get(2)).text());
-        m.find();
-        int day1 = Integer.parseInt(m.group(1));
-        int day2 = Integer.parseInt(m.group(2));
-        String monthInt = m.group(3);
-        String monthString = m.group(4);
-        int year = Integer.parseInt(m.group(5));
-
-        YearMonth ym;
-        if (monthString != null) {
-            DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM", Locale.GERMAN);
-            ym = YearMonth.of(year, f.parse(monthString).get(ChronoField.MONTH_OF_YEAR));
-
-        } else if (monthInt != null) {
-            ym = YearMonth.of(year, Integer.valueOf(monthInt));
-        } else {
-            throw new MensaDateParsingException("Unable to parse month! No regex match!");
-        }
-        LocalDate mondayDate = LocalDate.of(year, ym.getMonth(), day1);
+        LocalDate mondayDate = parseDate(((TextNode) dateContainer.childNodes().get(2)).text());
 
         ArrayList<MensaDayData> mensaDays = new ArrayList<>();
         Iterator<Element> trIt = dataTable.select(">tbody>tr").iterator();
@@ -98,6 +80,28 @@ public class KhgMensaParser {
         }
 
         return mensaDays;
+    }
+
+    private LocalDate parseDate(String text) throws MensaDateParsingException, NumberFormatException {
+        Matcher m = DATE_PATTERN.matcher(text);
+        m.find();
+        int day1 = Integer.parseInt(m.group(1));
+        int day2 = Integer.parseInt(m.group(2));
+        String monthInt = m.group(3);
+        String monthString = m.group(4);
+        int year = Integer.parseInt(m.group(5));
+        YearMonth ym;
+        if (monthString != null) {
+            DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM", Locale.GERMAN);
+            ym = YearMonth.of(year, f.parse(monthString).get(ChronoField.MONTH_OF_YEAR));
+            
+        } else if (monthInt != null) {
+            ym = YearMonth.of(year, Integer.valueOf(monthInt));
+        } else {
+            throw new MensaDateParsingException("Unable to parse month! No regex match!");
+        }
+        LocalDate mondayDate = LocalDate.of(year, ym.getMonth(), day1);
+        return mondayDate;
     }
 
     private MealData parseMeal(List<Element> tds) {

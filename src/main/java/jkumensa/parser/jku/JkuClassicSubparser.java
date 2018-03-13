@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
 import jkumensa.parser.data.MealData;
 import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaMealParsingException;
 import jkumensa.parser.i.AllergyCode;
 import jkumensa.parser.i.FoodCharacteristic;
+import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
 import lombok.Value;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -54,6 +54,9 @@ public class JkuClassicSubparser {
     }
 
     private List<MealData> parseMeals(List<List<Node>> raw) {
+        if (raw.isEmpty()) {
+            return Collections.emptyList();
+        }
         if (raw.get(0).stream().anyMatch(n -> n.toString().contains("eschlossen"))) {
             return Collections.emptyList();
         }

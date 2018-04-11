@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MealData;
 import jkumensa.parser.data.MensaDayData;
-import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaDateParsingException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -57,22 +56,19 @@ public class KhgMensaParser {
             int dayOffset = Weekday.valueOf(weekday).ordinal();
             LocalDate date = mondayDate.plusDays(dayOffset);
 
-            List<SubCategoryData> subCategories = new ArrayList<>(2 + 1);
+            List<CategoryData> categories = new ArrayList<>(2 + 1);
             tds.remove(0);
             if (tds.get(0).text().length() > 5 /*easy empty check because of nbsp and other funny things*/) {
-                subCategories.add(parseSubCat(tds));
+                categories.add(parseCat(tds));
             }
             for (int i = 0; i < rowspan - 1 && trIt.hasNext() /*fix for rowspan without having enough elements*/; i++) {
                 tds = trIt.next().select(">td");
                 if (tds.get(0).text().length() > 5) {
-                    subCategories.add(parseSubCat(tds));
+                    categories.add(parseCat(tds));
                 }
             }
 
-            List<CategoryData> categories = new ArrayList<>(1);
-            categories.add(new CategoryData(null, subCategories));
             mensaDays.add(new MensaDayData(date, categories));
-
         }
 
         return mensaDays;
@@ -100,7 +96,7 @@ public class KhgMensaParser {
         return mondayDate;
     }
 
-    private SubCategoryData parseSubCat(List<Element> tds) {
+    private CategoryData parseCat(List<Element> tds) {
         String title = cleanString(tds.get(0).text());
         Float bonusPrice = parseFloat(tds.get(1).text());
         Float normalPrice = parseFloat(tds.get(2).text());
@@ -108,7 +104,7 @@ public class KhgMensaParser {
         ArrayList<MealData> meals = new ArrayList<>(3);
         meals.add(meal);
 
-        return new SubCategoryData(null, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
+        return new CategoryData(null, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
     }
 
     private float parseFloat(String s) {

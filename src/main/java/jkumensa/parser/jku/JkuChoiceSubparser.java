@@ -8,12 +8,12 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
+import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MealData;
-import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaMealParsingException;
 import jkumensa.parser.i.AllergyCode;
 import jkumensa.parser.i.FoodCharacteristic;
+import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
 import lombok.Value;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -32,7 +32,7 @@ public class JkuChoiceSubparser {
      */
     private static final Pattern PRICE_PATTERN = Pattern.compile("(?:(\\d+,\\d\\d)\\/)?(\\d+,\\d\\d) Euro");
 
-    public List<SubCategoryData> parse(Element categoryElement) {
+    public List<CategoryData> parse(Element categoryElement) {
         String title = categoryElement.select(".category-title").first().text();
         Element catcontent = categoryElement.select(".category-content").first();
         catcontent.select("> p").first().remove(); //first p contains date -> so remove TODO: make more robust
@@ -51,7 +51,7 @@ public class JkuChoiceSubparser {
             .collect(Collectors.toList());
     }
 
-    private SubCategoryData parseSubCategory(List<? extends Node> raw) {
+    private CategoryData parseSubCategory(List<? extends Node> raw) {
         ListIterator<? extends Node> it = raw.listIterator();
 
         String title = ((Element) it.next()).text();
@@ -63,7 +63,7 @@ public class JkuChoiceSubparser {
             .map(this::parseMeal)
             .collect(Collectors.toList());
         
-        return new SubCategoryData(title, meals, -1, -1, -1, Collections.emptySet());
+        return new CategoryData(title, meals, -1, -1, -1, Collections.emptySet());
     }
 
     private MealData parseMeal(List<Node> raw) {

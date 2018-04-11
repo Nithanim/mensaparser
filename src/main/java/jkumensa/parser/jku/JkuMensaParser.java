@@ -3,9 +3,11 @@ package jkumensa.parser.jku;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Pattern;
+import java.util.Map;
 import java.util.stream.Collectors;
 import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MensaDayData;
@@ -14,47 +16,45 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class JkuMensaParser {
-    private static final Pattern ALLERGY_PATTERN = Pattern.compile("(\\(\\s*[A-Z](?:[^A-Z]*[A-Z])*\\s*\\))");
-    private static final Pattern CLASSIC_PRICE_PATTERN = Pattern.compile("[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.GERMAN);
 
-    public List<MensaDayData> parse(Document doc) {
+    public Map<MensaSubType, List<MensaDayData>> parse(Document doc) {
         Element days = doc.select("#speiseplan.desktop #week #days").first();
 
-        List<MensaDayData> parsedDays = new ArrayList<>();
+        Map<MensaSubType, List<MensaDayData>> data = new EnumMap<>(MensaSubType.class);
+        Arrays.stream(MensaSubType.values()).forEach(t -> data.put(t, new ArrayList<>(6)));
+        
         for (Element day : days.select(">.day")) {
-            MensaDayData md = parseDay(day);
-            parsedDays.add(md);
+            Map<MensaSubType, MensaDayData> mdm = parseDay(day);
+            mdm.entrySet().forEach((e) -> {
+                data.get(e.getKey()).add(e.getValue());
+            });
         }
-        return parsedDays;
+        return data;
     }
 
-    private MensaDayData parseDay(Element day) {
+    private Map<MensaSubType, MensaDayData> parseDay(Element day) {
         String dateString = day.select(".date").text().trim();
         LocalDate date = DATE_FORMATTER.parse(dateString, LocalDate::from);
 
-        List<CategoryData> categories = new ArrayList<>();
-
         Elements rawCategories = day.select(".day-content > .category");
 
-        categories.add(
-            new CategoryData(
-                "Classic",
-                rawCategories.stream()
-                    .filter(e -> e.select(".category-title").first().text().contains("Classic"))
-                    .map(e -> new JkuClassicSubparser().parse(e))
-                    .collect(Collectors.toList())
-            )
-        );
-        categories.add(
-            new CategoryData(
-                "Choice",
-                new JkuChoiceSubparser().parse(
-                    rawCategories.stream().filter(e -> e.select(".category-title").first().text().contains("Choice")).findAny().get()
-                )
-            )
-        );
+        Map<MensaSubType, MensaDayData> data = new EnumMap<>(MensaSubType.class);
+        List<CategoryData> classics = rawCategories.stream()
+            .filter(e -> e.select(".category-title").first().text().contains("Classic"))
+            .map(e -> new JkuClassicSubparser().parse(e))
+            .collect(Collectors.toList());
+        data.put(MensaSubType.CLASSIC, new MensaDayData(date, classics));
 
-        return new MensaDayData(date, categories);
+        List<CategoryData> choices = new JkuChoiceSubparser().parse(
+            rawCategories.stream().filter(e -> e.select(".category-title").first().text().contains("Choice")).findAny().get()
+        );
+        data.put(MensaSubType.CHOICE, new MensaDayData(date, choices));
+
+        return data;
+    }
+
+    public enum MensaSubType {
+        CLASSIC, CHOICE;
     }
 }

@@ -1,9 +1,12 @@
 package jkumensa.parser.i;
 
 import java.util.List;
+import java.util.Set;
 
-public interface Category {
+public interface Category extends Priced {
     String getTitle();
+
+    List<? extends Meal> getMeals();
     
-    List<? extends SubCategory> getSubCategories();
+    Set<? extends FoodCharacteristic> getAttachments();
 }

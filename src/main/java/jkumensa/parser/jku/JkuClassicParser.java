@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MealData;
 import jkumensa.parser.data.MensaDayData;
-import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaAllergyCodeParsingException;
 import jkumensa.parser.ex.MensaMealParsingException;
 import jkumensa.parser.i.AllergyCode;
@@ -45,18 +44,17 @@ public class JkuClassicParser {
 
         List<CategoryData> categories = new ArrayList<>();
 
-        List<SubCategoryData> classic = parseClassic(
+        List<CategoryData> classic = parseClassic(
             day.select(".day-content > .category").stream()
                 .filter(e -> e.select(".category-title").first().text().contains("lassic"))
                 .collect(Collectors.toList())
         );
-        categories.add(new CategoryData("Classic", classic));
 
-        return new MensaDayData(date, categories);
+        return new MensaDayData(date, classic);
     }
 
-    private List<SubCategoryData> parseClassic(List<Element> categories) {
-        List<SubCategoryData> subcats = new ArrayList<>();
+    private List<CategoryData> parseClassic(List<Element> categories) {
+        List<CategoryData> subcats = new ArrayList<>();
 
         for (Element categoryElement : categories) {
             String title = categoryElement.select(".category-title").first().text();
@@ -78,7 +76,7 @@ public class JkuClassicParser {
                     priceGuest = Float.parseFloat(m.group(3).replace(",", "."));
                 }
 
-                SubCategoryData s = new SubCategoryData("Classic", meals, priceStudentBonus, priceStudent, priceGuest, Collections.emptySet());
+                CategoryData s = new CategoryData("Classic", meals, priceStudentBonus, priceStudent, priceGuest, Collections.emptySet());
                 subcats.add(s);
             }
         }

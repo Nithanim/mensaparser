@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jkumensa.parser.data.CategoryData;
 import jkumensa.parser.data.MealData;
-import jkumensa.parser.data.SubCategoryData;
 import jkumensa.parser.ex.MensaMealParsingException;
 import jkumensa.parser.i.AllergyCode;
 import jkumensa.parser.i.FoodCharacteristic;
@@ -21,7 +21,7 @@ import org.jsoup.select.Elements;
 public class JkuClassicSubparser {
     private static final Pattern CLASSIC_PRICE_PATTERN = Pattern.compile("[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*");
 
-    public SubCategoryData parse(Element categoryElement) {
+    public CategoryData parse(Element categoryElement) {
         String title = categoryElement.select(".category-title").first().text();
         Element catcontent = categoryElement.select(".category-content").first();
         List<List<Node>> cleaned = Cleaner.splitFuckedUpFreeformUserInput(catcontent.children());
@@ -42,7 +42,7 @@ public class JkuClassicSubparser {
         Elements icons = categoryElement.select("> .category-icons img");
         Set<FoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(icons);
 
-        SubCategoryData s = new SubCategoryData(
+        CategoryData s = new CategoryData(
             title,
             meals,
             priceGuest,

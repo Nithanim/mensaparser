@@ -1,7 +1,6 @@
 package jkumensa.parser.khg;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
@@ -21,7 +20,15 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 public class KhgMensaParser {
-    private static final Pattern DATE_PATTERN = Pattern.compile("(\\d\\d)\\.[^\\d]*(\\d\\d)\\.(?:(\\d\\d)\\.|[^A-Z]*([A-Za-z]*))[^\\d]*(\\d\\d\\d\\d)");
+    /**
+     * 1: int: start day <br>
+     * 2: int: start month (optional) <br>
+     * 3: int: end day <br>
+     * 4: int: end month (or 5) <br>
+     * 5: str: end month (or 4) <br>
+     * 6: int: end year
+     */
+    private static final Pattern DATE_PATTERN = Pattern.compile("(\\d?\\d)\\.(?:[^-\\d]*(\\d?\\d))?[^\\d]*(\\d?\\d)\\.\\s*(?:(\\d?\\d)\\.|([A-Za-zäöü]*))\\s*(\\d?\\d?\\d\\d)");
 
     public List<MensaDayData> parse(Document doc) {
         Element container = doc.select(".modTeaser .swslang").first();
@@ -74,26 +81,42 @@ public class KhgMensaParser {
         return mensaDays;
     }
 
+    /**
+     * 1: int: start day
+     *
+     * 2: int: start month (optional)
+     *
+     * 3: int: end day 4: int: end month (or 5) 5: str: end month (or 4) 6: int:
+     * end year
+     */
     private LocalDate parseDate(String text) throws MensaDateParsingException, NumberFormatException {
         Matcher m = DATE_PATTERN.matcher(text);
         m.find();
-        int day1 = Integer.parseInt(m.group(1));
-        int day2 = Integer.parseInt(m.group(2));
-        String monthInt = m.group(3);
-        String monthString = m.group(4);
-        int year = Integer.parseInt(m.group(5));
-        YearMonth ym;
-        if (monthString != null) {
-            DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM", Locale.GERMAN);
-            ym = YearMonth.of(year, f.parse(monthString).get(ChronoField.MONTH_OF_YEAR));
+        int startDay = Integer.parseInt(m.group(1));
+        int startMonth = m.group(2) != null ? Integer.parseInt(m.group(2)) : -1;
+        int endDay = Integer.parseInt(m.group(3));
+        int endMonth;
 
-        } else if (monthInt != null) {
-            ym = YearMonth.of(year, Integer.valueOf(monthInt));
+        if (m.group(4) != null) {
+            endMonth = Integer.parseInt(m.group(4));
+        } else if (m.group(5) != null) {
+            endMonth = monthStrToNum(m.group(5));
         } else {
-            throw new MensaDateParsingException("Unable to parse month! No regex match!");
+            throw new MensaDateParsingException("Unable to parse date \"" + text + "\"");
         }
-        LocalDate mondayDate = LocalDate.of(year, ym.getMonth(), day1);
-        return mondayDate;
+
+        int endYear = Integer.parseInt(m.group(6));
+        if (endYear < 2000) {
+            endYear += 2000;
+        }
+
+        LocalDate endDate = LocalDate.of(endYear, endMonth, endDay);
+        LocalDate startDate = endDate.minusDays(4);
+
+        if (startDate.getDayOfMonth() != startDay) {
+            throw new MensaDateParsingException("Calculated start day does not match parsed one \"" + text + "\"");
+        }
+        return startDate;
     }
 
     private CategoryData parseCat(List<Element> tds) {
@@ -122,6 +145,11 @@ public class KhgMensaParser {
 
     private String cleanString(String s) {
         return s.replace("\u00a0", " ").trim();
+    }
+
+    private int monthStrToNum(String month) {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM", Locale.GERMAN);
+        return f.parse(month).get(ChronoField.MONTH_OF_YEAR);
     }
 
     private enum Weekday {

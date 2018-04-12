@@ -15,6 +15,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class KhgTest {
+    
+    @Test
+    public void D2018_04_11() throws IOException {
+        Document doc = Jsoup.parse(KhgTest.class.getClassLoader().getResourceAsStream("html/khg_2018-04-11.html"), "UTF-8", "");
+        KhgMensaParser p = new KhgMensaParser();
+        List<MensaDayData> daysActual = p.parse(doc);
+    }
+    
     @Test
     public void D2017_12_11() throws IOException {
         Document doc = Jsoup.parse(KhgTest.class.getClassLoader().getResourceAsStream("html/khg_2017-12-11.html"), "UTF-8", "");

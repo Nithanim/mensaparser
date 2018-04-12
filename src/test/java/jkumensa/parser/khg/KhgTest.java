@@ -15,14 +15,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class KhgTest {
-    
+
     @Test
     public void D2018_04_11() throws IOException {
         Document doc = Jsoup.parse(KhgTest.class.getClassLoader().getResourceAsStream("html/khg_2018-04-11.html"), "UTF-8", "");
         KhgMensaParser p = new KhgMensaParser();
         List<MensaDayData> daysActual = p.parse(doc);
     }
-    
+
     @Test
     public void D2017_12_11() throws IOException {
         Document doc = Jsoup.parse(KhgTest.class.getClassLoader().getResourceAsStream("html/khg_2017-12-11.html"), "UTF-8", "");
@@ -34,7 +34,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 11),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Apfel-Curry Suppe, pikanter Hirseauflauf mit Tomatensauce und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -42,7 +42,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Apfel-Curry Suppe, Putenfilet in Kürbiskernpanade mit Petersilerdäpfel und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -55,7 +55,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 12),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Erdäpfelsuppe, Thunfisch oder Gemüselasagne mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -63,7 +63,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Erdäpfelsuppe. Züricher Geschnetzeltes vom Schwein mit Reis und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -76,7 +76,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 13),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Hafer-Lauchsuppe, Spaghetti mit Linsen-Gemüse.Bolognese und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -84,7 +84,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Haer-Lauchsuppe, Montafoner Hendlfilet mit Spinatspätzle und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -97,7 +97,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 14),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Buchweizen-Frittatensuppe, Topfennockerl mit Apfelmus", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -105,7 +105,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Buchweizen-Frittatensuppe, gekochtes Rindfleisch mit Semmelkren und Erdäpfelschmarren", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -118,7 +118,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 15),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Dinkel-Grießschöberlsuppe, Krautfleckerl mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -126,7 +126,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Dinkel-Grießschöberlsuppe. Chilli con Carne mit Gebäck", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -151,7 +151,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 18),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Kohlsuppe, Gemüse-Mozzarellstrudel mit Tomatenragout und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -159,7 +159,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Kohlsuppe, Wiener Schnitzel vom österr. Schwein mit Petersilerdäpfel und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -167,7 +167,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 3",
                             Arrays.asList(
                                 new MealData("Mascarpone-Orangencreme", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -180,7 +180,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 19),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Kürbiskernknödelsuppe, Spinat-Nudelauflauf mit Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -188,7 +188,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Kürbiskernknödelsuppe, österr. Brathendl mit Reis und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -196,7 +196,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 3",
                             Arrays.asList(
                                 new MealData("Topfen-Pfirsichstrudel", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -209,7 +209,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 20),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Karotten-Ingwersuppe, Dinkelreislaibchen mit Kohlrabiragout und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -217,7 +217,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Karotten-Ingwersuppe, österr. Puten-Wachauer-Rieslingschnitzel mit Vollkornhörnchen und Salat", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -230,7 +230,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 21),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData("Ab heute ist unsere Mensa geschlossen!", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -238,7 +238,7 @@ public class KhgTest {
                             Collections.emptySet()
                         ),
                         new CategoryData(
-                            null,
+                            "Menü 2",
                             Arrays.asList(
                                 new MealData("Am 8. Jänner 2018 kochen wir wieder gerne für Sie!", -1, -1, -1, Collections.emptySet(), Collections.emptySet())
                             ),
@@ -251,7 +251,7 @@ public class KhgTest {
                     LocalDate.of(2017, Month.DECEMBER, 22),
                     Arrays.asList(
                         new CategoryData(
-                            null,
+                            "Menü 1",
                             Arrays.asList(
                                 new MealData(
                                     "Wir wünschen allen unseren Gästen ein frohes Weihnachtsfest und alles Gute für das Jahr 2018",

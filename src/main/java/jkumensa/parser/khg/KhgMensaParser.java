@@ -63,15 +63,16 @@ public class KhgMensaParser {
             int dayOffset = Weekday.valueOf(weekday).ordinal();
             LocalDate date = mondayDate.plusDays(dayOffset);
 
+            int menuNumber = 1;
             List<CategoryData> categories = new ArrayList<>(2 + 1);
             tds.remove(0);
             if (tds.get(0).text().length() > 5 /*easy empty check because of nbsp and other funny things*/) {
-                categories.add(parseCat(tds));
+                categories.add(parseCat(tds, menuNumber++));
             }
             for (int i = 0; i < rowspan - 1 && trIt.hasNext() /*fix for rowspan without having enough elements*/; i++) {
                 tds = trIt.next().select(">td");
                 if (tds.get(0).text().length() > 5) {
-                    categories.add(parseCat(tds));
+                    categories.add(parseCat(tds, menuNumber++));
                 }
             }
 
@@ -119,7 +120,7 @@ public class KhgMensaParser {
         return startDate;
     }
 
-    private CategoryData parseCat(List<Element> tds) {
+    private CategoryData parseCat(Elements tds, int menuNumber) {
         String title = cleanString(tds.get(0).text());
         Float bonusPrice = parseFloat(tds.get(1).text());
         Float normalPrice = parseFloat(tds.get(2).text());
@@ -127,7 +128,7 @@ public class KhgMensaParser {
         ArrayList<MealData> meals = new ArrayList<>(3);
         meals.add(meal);
 
-        return new CategoryData(null, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
+        return new CategoryData("Menü " + menuNumber, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
     }
 
     private float parseFloat(String s) {

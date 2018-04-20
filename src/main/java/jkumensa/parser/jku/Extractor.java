@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import jkumensa.api.MensaFoodCharacteristic;
+import jkumensa.api.AllergyCodeSet;
 import jkumensa.parser.ex.MensaAllergyCodeParsingException;
 import jkumensa.parser.ex.MensaFoodCharacteristicParsingException;
-import jkumensa.parser.i.AllergyCode;
-import jkumensa.parser.i.FoodCharacteristic;
 import org.jsoup.nodes.Element;
 
 public class Extractor {
     public static final Pattern ALLERGY_PATTERN = Pattern.compile("(\\(\\s*[A-Z](?:[\\s;,]+[A-Z])*\\s*\\))");
 
-    public static EnumSet<AllergyCode> parseAllergyCodes(String allergyString) {
-        EnumSet<AllergyCode> s = EnumSet.noneOf(AllergyCode.class);
+    public static AllergyCodeSet parseAllergyCodes(String allergyString) {
+        AllergyCodeSet s = new AllergyCodeSet();
         for (int i = 0; i < allergyString.length(); i++) {
             char c = allergyString.charAt(i);
             if ('A' <= c && c <= 'Z') {
                 try {
-                    s.add(AllergyCode.valueOf(String.valueOf(c)));
+                    s.add(c);
                 } catch (IllegalArgumentException ex) {
                     throw new MensaAllergyCodeParsingException(ex);
                 }
@@ -29,28 +29,28 @@ public class Extractor {
         return s;
     }
 
-    public static Set<FoodCharacteristic> foodCharacteristicFromImg(List<Element> imgs) {
+    public static Set<MensaFoodCharacteristic> foodCharacteristicFromImg(List<Element> imgs) {
         return imgs.stream()
             .map(img -> foodCharacteristicFromImg(img))
-            .collect(Collectors.toCollection(() -> EnumSet.noneOf(FoodCharacteristic.class)));
+            .collect(Collectors.toCollection(() -> EnumSet.noneOf(MensaFoodCharacteristic.class)));
     }
 
-    public static FoodCharacteristic foodCharacteristicFromImg(Element img) {
+    public static MensaFoodCharacteristic foodCharacteristicFromImg(Element img) {
         if (!img.tagName().equals("img")) {
             throw new IllegalArgumentException("Give element is not an img tag " + img);
         }
 
         String alt = img.attr("alt");
         if (alt.contains("Vegetarisch")) {
-            return FoodCharacteristic.VEGETARIAN;
+            return MensaFoodCharacteristic.VEGETARIAN;
         } else if (alt.contains("Vegan")) {
-            return FoodCharacteristic.VEGAN;
+            return MensaFoodCharacteristic.VEGAN;
         } else if (alt.contains("Fisch")) {
-            return FoodCharacteristic.FISH;
+            return MensaFoodCharacteristic.FISH;
         } else if (alt.contains("Nachhaltige Fischerei")) {
-            return FoodCharacteristic.MSC;
+            return MensaFoodCharacteristic.MSC;
         } else if (alt.contains("Brainfood")) {
-            return FoodCharacteristic.BRAINFOOD;
+            return MensaFoodCharacteristic.BRAINFOOD;
         }
         throw new MensaFoodCharacteristicParsingException("No known type was found for " + img);
     }

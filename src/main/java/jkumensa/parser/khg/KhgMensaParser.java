@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jkumensa.parser.data.CategoryData;
-import jkumensa.parser.data.MealData;
+import jkumensa.api.AllergyCodeSet;
+import jkumensa.api.data.MensaCategoryData;
+import jkumensa.api.data.MensaMealData;
 import jkumensa.parser.data.MensaDayData;
 import jkumensa.parser.ex.MensaDateParsingException;
 import org.jsoup.nodes.Document;
@@ -64,7 +65,7 @@ public class KhgMensaParser {
             LocalDate date = mondayDate.plusDays(dayOffset);
 
             int menuNumber = 1;
-            List<CategoryData> categories = new ArrayList<>(2 + 1);
+            List<MensaCategoryData> categories = new ArrayList<>(2 + 1);
             tds.remove(0);
             if (tds.get(0).text().length() > 5 /*easy empty check because of nbsp and other funny things*/) {
                 categories.add(parseCat(tds, menuNumber++));
@@ -120,15 +121,15 @@ public class KhgMensaParser {
         return startDate;
     }
 
-    private CategoryData parseCat(Elements tds, int menuNumber) {
+    private MensaCategoryData parseCat(Elements tds, int menuNumber) {
         String title = cleanString(tds.get(0).text());
         Float bonusPrice = parseFloat(tds.get(1).text());
         Float normalPrice = parseFloat(tds.get(2).text());
-        MealData meal = new MealData(title, -1, -1, -1, Collections.emptySet(), Collections.emptySet());
-        ArrayList<MealData> meals = new ArrayList<>(3);
+        MensaMealData meal = new MensaMealData(title, -1, -1, -1, new AllergyCodeSet(), Collections.emptySet());
+        ArrayList<MensaMealData> meals = new ArrayList<>(3);
         meals.add(meal);
 
-        return new CategoryData("Menü " + menuNumber, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
+        return new MensaCategoryData("Menü " + menuNumber, meals, bonusPrice, -1, normalPrice, Collections.emptySet());
     }
 
     private float parseFloat(String s) {

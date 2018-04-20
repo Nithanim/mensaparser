@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import jkumensa.parser.data.CategoryData;
+import jkumensa.api.data.MensaCategoryData;
 import jkumensa.parser.data.MensaDayData;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,13 +40,13 @@ public class JkuMensaParser {
         Elements rawCategories = day.select(".day-content > .category");
 
         Map<MensaSubType, MensaDayData> data = new EnumMap<>(MensaSubType.class);
-        List<CategoryData> classics = rawCategories.stream()
+        List<MensaCategoryData> classics = rawCategories.stream()
             .filter(e -> e.select(".category-title").first().text().contains("Classic"))
             .map(e -> new JkuClassicSubparser().parse(e))
             .collect(Collectors.toList());
         data.put(MensaSubType.CLASSIC, new MensaDayData(date, classics));
 
-        List<CategoryData> choices = new JkuChoiceSubparser().parse(
+        List<MensaCategoryData> choices = new JkuChoiceSubparser().parse(
             rawCategories.stream().filter(e -> e.select(".category-title").first().text().contains("Choice")).findAny().get()
         );
         data.put(MensaSubType.CHOICE, new MensaDayData(date, choices));

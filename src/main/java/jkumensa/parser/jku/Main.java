@@ -3,8 +3,8 @@ package jkumensa.parser.jku;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import jkumensa.parser.data.CategoryData;
-import jkumensa.parser.data.MealData;
+import jkumensa.api.data.MensaCategoryData;
+import jkumensa.api.data.MensaMealData;
 import jkumensa.parser.data.MensaDayData;
 import jkumensa.parser.khg.KhgMensaParser;
 import org.jsoup.Jsoup;
@@ -32,10 +32,10 @@ public class Main {
     private static void printMensaDay(List<MensaDayData> ds) {
         for (MensaDayData day : ds) {
             System.out.println(day.getDate());
-            for (CategoryData cat : day.getCategories()) {
+            for (MensaCategoryData cat : day.getCategories()) {
                 System.out.println("\t" + cat.getTitle() + " [" + cat.getPriceGuest() + '/' + cat.getPriceStudent() + '/' + cat.getPriceStudentBonus() + "] ");
 
-                for (MealData m : cat.getMeals()) {
+                for (MensaMealData m : cat.getMeals()) {
                     System.out.println("\t\t\t" + m.getTitle() + " [" + m.getPriceGuest() + '/' + m.getPriceStudent() + '/' + m.getPriceStudentBonus() + "] " + m.getAllergyCodes() + " " + m.getFoodCharacteristics());
                 }
             }

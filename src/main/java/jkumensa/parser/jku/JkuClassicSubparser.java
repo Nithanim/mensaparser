@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jkumensa.parser.data.CategoryData;
-import jkumensa.parser.data.MealData;
+import jkumensa.api.AllergyCodeSet;
+import jkumensa.api.MensaFoodCharacteristic;
+import jkumensa.api.data.MensaCategoryData;
+import jkumensa.api.data.MensaMealData;
 import jkumensa.parser.ex.MensaMealParsingException;
-import jkumensa.parser.i.AllergyCode;
-import jkumensa.parser.i.FoodCharacteristic;
 import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
 import lombok.Value;
 import org.jsoup.nodes.Element;
@@ -21,11 +21,11 @@ import org.jsoup.select.Elements;
 public class JkuClassicSubparser {
     private static final Pattern CLASSIC_PRICE_PATTERN = Pattern.compile("[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*(\\d*,\\d*)[^\\d]*");
 
-    public CategoryData parse(Element categoryElement) {
+    public MensaCategoryData parse(Element categoryElement) {
         String title = categoryElement.select(".category-title").first().text();
         Element catcontent = categoryElement.select(".category-content").first();
         List<List<Node>> cleaned = Cleaner.splitFuckedUpFreeformUserInput(catcontent.children());
-        List<MealData> meals = parseMeals(cleaned);
+        List<MensaMealData> meals = parseMeals(cleaned);
 
         float priceGuest = -1;
         float priceStudent = -1;
@@ -40,9 +40,9 @@ public class JkuClassicSubparser {
         }
 
         Elements icons = categoryElement.select("> .category-icons img");
-        Set<FoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(icons);
+        Set<MensaFoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(icons);
 
-        CategoryData s = new CategoryData(
+        MensaCategoryData s = new MensaCategoryData(
             title,
             meals,
             priceGuest,
@@ -53,7 +53,7 @@ public class JkuClassicSubparser {
         return s;
     }
 
-    private List<MealData> parseMeals(List<List<Node>> raw) {
+    private List<MensaMealData> parseMeals(List<List<Node>> raw) {
         if (raw.isEmpty()) {
             return Collections.emptyList();
         }
@@ -61,7 +61,7 @@ public class JkuClassicSubparser {
             return Collections.emptyList();
         }
 
-        List<MealData> meals = new ArrayList<>();
+        List<MensaMealData> meals = new ArrayList<>();
 
         for (List<Node> l : raw) {
             Element e = new Element("dummy");
@@ -73,7 +73,7 @@ public class JkuClassicSubparser {
 
                 Matcher m = ALLERGY_PATTERN.matcher(fulltext);
 
-                EnumSet<AllergyCode> allergyCodes = EnumSet.noneOf(AllergyCode.class);
+                AllergyCodeSet allergyCodes = new AllergyCodeSet();
 
                 StringBuilder textWithoutAllergyCodes = new StringBuilder();
                 int pos = 0;
@@ -94,7 +94,7 @@ public class JkuClassicSubparser {
 
                 String title = textWithoutAllergyCodes.toString().trim();
 
-                meals.add(new MealData(title, -1, -1, -1, allergyCodes, EnumSet.noneOf(FoodCharacteristic.class)));
+                meals.add(new MensaMealData(title, -1, -1, -1, allergyCodes, Collections.emptySet()));
             } catch (Exception ex) {
                 throw new MensaMealParsingException("Unable to parse meal from >>>" + fulltext + "<<<", ex);
             }
@@ -103,11 +103,11 @@ public class JkuClassicSubparser {
         return meals;
     }
 
-    private Dual<String, EnumSet<FoodCharacteristic>> extractAttachments(String s) {
+    private Dual<String, EnumSet<MensaFoodCharacteristic>> extractFoodCharacteristics(String s) {
         Matcher m = ALLERGY_PATTERN.matcher(s);
 
         StringBuilder text = new StringBuilder();
-        EnumSet<FoodCharacteristic> attachments = EnumSet.noneOf(FoodCharacteristic.class);
+        EnumSet<MensaFoodCharacteristic> attachments = EnumSet.noneOf(MensaFoodCharacteristic.class);
 
         int pos = 0;
         boolean matchedSomething = false; //can only call end() when something matched...
@@ -119,7 +119,7 @@ public class JkuClassicSubparser {
                 pos = m.end();
             }
 
-            attachments.addAll(parseAttachments(allergyString));
+            attachments.addAll(parseFoodCharacteristics(allergyString));
             matchedSomething = true;
         }
         if (!matchedSomething || m.end() < text.length()) {
@@ -130,8 +130,8 @@ public class JkuClassicSubparser {
         return new Dual<>(title, attachments);
     }
 
-    private EnumSet<FoodCharacteristic> parseAttachments(String attachments) {
-        return EnumSet.noneOf(FoodCharacteristic.class); //TODO
+    private EnumSet<MensaFoodCharacteristic> parseFoodCharacteristics(String s) {
+        return EnumSet.noneOf(MensaFoodCharacteristic.class); //TODO
     }
 
     @Value

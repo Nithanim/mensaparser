@@ -12,15 +12,16 @@ import org.jsoup.nodes.Document;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        khg();
+        jku();
+        //khg();
     }
 
     private static void jku() throws IOException {
         Document doc = Jsoup.connect("http://menu.mensen.at/index/index/locid/1").get();
         Map<JkuMensaParser.MensaSubType, List<MensaDayData>> p = new JkuMensaParser().parse(doc);
 
-        printMensaDay(p.get(JkuMensaParser.MensaSubType.CHOICE));
-        //printMensaDay(a.get(JkuMensaParser.MensaSubType.CLASSIC));
+        //printMensaDay(p.get(JkuMensaParser.MensaSubType.CHOICE));
+        printMensaDay(p.get(JkuMensaParser.MensaSubType.CLASSIC));
     }
 
     private static void khg() throws IOException {

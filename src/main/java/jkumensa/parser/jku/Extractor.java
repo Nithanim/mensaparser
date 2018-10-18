@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import jkumensa.api.MensaFoodCharacteristic;
 import jkumensa.api.AllergyCodeSet;
+import jkumensa.api.MensaFoodCharacteristic;
 import jkumensa.parser.ex.MensaAllergyCodeParsingException;
 import jkumensa.parser.ex.MensaFoodCharacteristicParsingException;
 import org.jsoup.nodes.Element;
@@ -40,16 +40,16 @@ public class Extractor {
             throw new IllegalArgumentException("Give element is not an img tag " + img);
         }
 
-        String alt = img.attr("alt");
-        if (alt.contains("Vegetarisch")) {
+        String alt = img.attr("alt").toLowerCase();
+        if (alt.contains("vegetarisch")) {
             return MensaFoodCharacteristic.VEGETARIAN;
-        } else if (alt.contains("Vegan")) {
+        } else if (alt.contains("vegan")) {
             return MensaFoodCharacteristic.VEGAN;
-        } else if (alt.contains("Fisch")) {
+        } else if (alt.contains("fisch")) {
             return MensaFoodCharacteristic.FISH;
-        } else if (alt.contains("Nachhaltige Fischerei")) {
+        } else if (alt.contains("nachhaltige fischerei")) {
             return MensaFoodCharacteristic.MSC;
-        } else if (alt.contains("Brainfood")) {
+        } else if (alt.contains("brainfood")) {
             return MensaFoodCharacteristic.BRAINFOOD;
         }
         throw new MensaFoodCharacteristicParsingException("No known type was found for " + img);

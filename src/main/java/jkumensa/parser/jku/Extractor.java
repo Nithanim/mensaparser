@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import jkumensa.api.AllergyCodeSet;
 import jkumensa.api.MensaFoodCharacteristic;
 import jkumensa.parser.ex.MensaAllergyCodeParsingException;
-import jkumensa.parser.ex.MensaFoodCharacteristicParsingException;
 import org.jsoup.nodes.Element;
 
 public class Extractor {
@@ -37,7 +36,7 @@ public class Extractor {
 
     public static MensaFoodCharacteristic foodCharacteristicFromImg(Element img) {
         if (!img.tagName().equals("img")) {
-            throw new IllegalArgumentException("Give element is not an img tag " + img);
+            throw new IllegalArgumentException("Given element is not an img tag " + img);
         }
 
         String alt = img.attr("alt").toLowerCase();
@@ -51,7 +50,8 @@ public class Extractor {
             return MensaFoodCharacteristic.MSC;
         } else if (alt.contains("brainfood")) {
             return MensaFoodCharacteristic.BRAINFOOD;
+        } else {
+            return MensaFoodCharacteristic.UNKNOWN;
         }
-        throw new MensaFoodCharacteristicParsingException("No known type was found for " + img);
     }
 }

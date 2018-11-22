@@ -31,7 +31,11 @@ public class JkuChoiceSubparser {
     public List<MensaCategoryData> parse(Element categoryElement) {
         String title = categoryElement.select(".category-title").first().text();
         Element catcontent = categoryElement.select(".category-content").first();
-        catcontent.select("> p").first().remove(); //first p contains date -> so remove TODO: make more robust
+/* Choice-page changed on 21.11.2018 - seems that choice is printed each day and no longer has a <p>-tag for date */
+//        Elements elems = catcontent.select("> p");
+//        if (!elems.isEmpty()) {
+//            elems.first().remove(); //first p contains date -> so remove
+//        }
 
         List<Node> flattened = Cleaner.flattenPTags(catcontent.children());
         Cleaner.replaceNbsp(flattened);

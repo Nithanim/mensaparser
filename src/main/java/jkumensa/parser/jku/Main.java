@@ -20,8 +20,8 @@ public class Main {
         Document doc = Jsoup.connect("http://menu.mensen.at/index/index/locid/1").get();
         Map<JkuMensaParser.MensaSubType, List<MensaDayData>> p = new JkuMensaParser().parse(doc);
 
-        //printMensaDay(p.get(JkuMensaParser.MensaSubType.CHOICE));
         printMensaDay(p.get(JkuMensaParser.MensaSubType.CLASSIC));
+        printMensaDay(p.get(JkuMensaParser.MensaSubType.CHOICE));
     }
 
     private static void khg() throws IOException {

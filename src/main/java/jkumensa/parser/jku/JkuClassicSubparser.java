@@ -74,6 +74,7 @@ public class JkuClassicSubparser {
                 Matcher m = ALLERGY_PATTERN.matcher(fulltext);
 
                 AllergyCodeSet allergyCodes = new AllergyCodeSet();
+                Set<MensaFoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(e.select("img"));
 
                 StringBuilder textWithoutAllergyCodes = new StringBuilder();
                 int pos = 0;
@@ -94,7 +95,7 @@ public class JkuClassicSubparser {
 
                 String title = textWithoutAllergyCodes.toString().trim();
 
-                meals.add(new MensaMealData(title, -1, -1, -1, allergyCodes, Collections.emptySet()));
+                meals.add(new MensaMealData(title, -1, -1, -1, allergyCodes, foodCharacteristics));
             } catch (Exception ex) {
                 throw new MensaMealParsingException("Unable to parse meal from >>>" + fulltext + "<<<", ex);
             }

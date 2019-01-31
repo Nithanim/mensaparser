@@ -43,6 +43,10 @@ public class Extractor {
         String alt = img.attr("alt").toLowerCase();
         if (alt.contains("vegetarisch")) {
             return MensaFoodCharacteristic.VEGETARIAN;
+        } else if (alt.equals("asc")) {
+            return MensaFoodCharacteristic.ASC;
+        } else if (alt.equals("msc")) {
+            return MensaFoodCharacteristic.MSC;
         } else if (alt.contains("vegan")) {
             return MensaFoodCharacteristic.VEGAN;
         } else if (alt.contains("fisch")) {
@@ -51,11 +55,12 @@ public class Extractor {
             return MensaFoodCharacteristic.MSC;
         } else if (alt.contains("brainfood")) {
             return MensaFoodCharacteristic.BRAINFOOD;
+        } else if (alt.contains("umweltzeichen")) {
+            return MensaFoodCharacteristic.AUSTRIAN_ENVIRONMENT;
         } else {
             return MensaFoodCharacteristic.UNKNOWN;
         }
     }
-    
 
     public static String extractAndRemoveAllergyCodes(String fulltext, AllergyCodeSet allergyCodes) {
         StringBuilder textWithoutAllergyCodes = new StringBuilder();

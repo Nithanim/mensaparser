@@ -1,9 +1,9 @@
 package jkumensa.parser.jku;
 
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,10 +66,11 @@ public class JkuChoiceSubparser {
     }
 
     private MensaMealData parseMeal(List<Node> raw) {
-        EnumSet<MensaFoodCharacteristic> foodCharacteristics = extractFoodCharacteristics(raw);
 
         Element e = new Element("dummy");
         e.insertChildren(0, raw);
+
+        Set<MensaFoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(e.select("img"));
 
         String fulltext = e.text();
         AllergyCodeSet allergyCodes = new AllergyCodeSet();
@@ -101,14 +102,5 @@ public class JkuChoiceSubparser {
         String text = textWithoutPrices.toString().trim();
 
         return new MensaMealData(text, -1, -1, price, allergyCodes, foodCharacteristics);
-    }
-
-    private EnumSet<MensaFoodCharacteristic> extractFoodCharacteristics(List<? extends Node> nodes) {
-        return nodes.stream()
-            .filter(Element.class::isInstance)
-            .map(Element.class::cast)
-            .filter(e -> e.tagName().equals("img"))
-            .map(Extractor::foodCharacteristicFromImg)
-            .collect(Collectors.toCollection(() -> EnumSet.noneOf(MensaFoodCharacteristic.class)));
     }
 }

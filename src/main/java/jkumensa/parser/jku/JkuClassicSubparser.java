@@ -2,7 +2,6 @@ package jkumensa.parser.jku;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -12,8 +11,6 @@ import jkumensa.api.MensaFoodCharacteristic;
 import jkumensa.api.data.MensaCategoryData;
 import jkumensa.api.data.MensaMealData;
 import jkumensa.parser.ex.MensaMealParsingException;
-import static jkumensa.parser.jku.Extractor.ALLERGY_PATTERN;
-import lombok.Value;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
@@ -83,42 +80,5 @@ public class JkuClassicSubparser {
         }
 
         return meals;
-    }
-
-    private Dual<String, EnumSet<MensaFoodCharacteristic>> extractFoodCharacteristics(String s) {
-        Matcher m = ALLERGY_PATTERN.matcher(s);
-
-        StringBuilder text = new StringBuilder();
-        EnumSet<MensaFoodCharacteristic> attachments = EnumSet.noneOf(MensaFoodCharacteristic.class);
-
-        int pos = 0;
-        boolean matchedSomething = false; //can only call end() when something matched...
-        while (m.find()) {
-            //Build the text of the meal without the allergy symbols
-            String allergyString = m.group(1);
-            if (pos != m.start()) {
-                text.append(s.substring(pos, m.start()));
-                pos = m.end();
-            }
-
-            attachments.addAll(parseFoodCharacteristics(allergyString));
-            matchedSomething = true;
-        }
-        if (!matchedSomething || m.end() < text.length()) {
-            text.append(text.substring(pos, text.length()));
-        }
-
-        String title = text.toString();
-        return new Dual<>(title, attachments);
-    }
-
-    private EnumSet<MensaFoodCharacteristic> parseFoodCharacteristics(String s) {
-        return EnumSet.noneOf(MensaFoodCharacteristic.class); //TODO
-    }
-
-    @Value
-    private class Dual<A, B> {
-        A a;
-        B b;
     }
 }

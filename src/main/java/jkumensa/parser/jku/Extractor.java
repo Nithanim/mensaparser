@@ -3,6 +3,7 @@ package jkumensa.parser.jku;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import jkumensa.api.AllergyCodeSet;
@@ -53,5 +54,28 @@ public class Extractor {
         } else {
             return MensaFoodCharacteristic.UNKNOWN;
         }
+    }
+    
+
+    public static String extractAndRemoveAllergyCodes(String fulltext, AllergyCodeSet allergyCodes) {
+        StringBuilder textWithoutAllergyCodes = new StringBuilder();
+        int pos = 0;
+        Matcher m = ALLERGY_PATTERN.matcher(fulltext);
+        while (m.find()) {
+            //Build the text of the meal without the allergy symbols
+            String allergyString = m.group(1);
+            if (pos != m.start()) {
+                textWithoutAllergyCodes.append(fulltext.substring(pos, m.start()).trim());
+                textWithoutAllergyCodes.append(' ');
+                pos = m.end();
+            }
+
+            allergyCodes.addAll(Extractor.parseAllergyCodes(allergyString));
+        }
+        if (pos < fulltext.length()) {
+            textWithoutAllergyCodes.append(fulltext.substring(pos, fulltext.length()).trim());
+        }
+        String title = textWithoutAllergyCodes.toString().trim();
+        return title;
     }
 }

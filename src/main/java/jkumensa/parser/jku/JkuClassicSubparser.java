@@ -71,29 +71,10 @@ public class JkuClassicSubparser {
             try {
                 fulltext = e.text().trim();
 
-                Matcher m = ALLERGY_PATTERN.matcher(fulltext);
-
                 AllergyCodeSet allergyCodes = new AllergyCodeSet();
                 Set<MensaFoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(e.select("img"));
 
-                StringBuilder textWithoutAllergyCodes = new StringBuilder();
-                int pos = 0;
-                while (m.find()) {
-                    //Build the text of the meal without the allergy symbols
-                    String allergyString = m.group(1);
-                    if (pos != m.start()) {
-                        textWithoutAllergyCodes.append(fulltext.substring(pos, m.start()).trim());
-                        textWithoutAllergyCodes.append(' ');
-                        pos = m.end();
-                    }
-
-                    allergyCodes.addAll(Extractor.parseAllergyCodes(allergyString));
-                }
-                if (pos < fulltext.length()) {
-                    textWithoutAllergyCodes.append(fulltext.substring(pos, fulltext.length()).trim());
-                }
-
-                String title = textWithoutAllergyCodes.toString().trim();
+                String title = Extractor.extractAndRemoveAllergyCodes(fulltext, allergyCodes);
 
                 meals.add(new MensaMealData(title, -1, -1, -1, allergyCodes, foodCharacteristics));
             } catch (Exception ex) {

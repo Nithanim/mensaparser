@@ -31,7 +31,7 @@ public class JkuChoiceSubparser {
     public List<MensaCategoryData> parse(Element categoryElement) {
         String title = categoryElement.select(".category-title").first().text();
         Element catcontent = categoryElement.select(".category-content").first();
-/* Choice-page changed on 21.11.2018 - seems that choice is printed each day and no longer has a <p>-tag for date */
+        /* Choice-page changed on 21.11.2018 - seems that choice is printed each day and no longer has a <p>-tag for date */
 //        Elements elems = catcontent.select("> p");
 //        if (!elems.isEmpty()) {
 //            elems.first().remove(); //first p contains date -> so remove
@@ -72,6 +72,8 @@ public class JkuChoiceSubparser {
         e.insertChildren(0, raw);
 
         String fulltext = e.text();
+        AllergyCodeSet allergyCodes = new AllergyCodeSet();
+        fulltext = Extractor.extractAndRemoveAllergyCodes(fulltext, allergyCodes);
 
         //build generic method to extract info by regex and stripping it off the string
         float price = -1;
@@ -98,7 +100,7 @@ public class JkuChoiceSubparser {
 
         String text = textWithoutPrices.toString().trim();
 
-        return new MensaMealData(text, -1, -1, price, new AllergyCodeSet(), foodCharacteristics);
+        return new MensaMealData(text, -1, -1, price, allergyCodes, foodCharacteristics);
     }
 
     private EnumSet<MensaFoodCharacteristic> extractFoodCharacteristics(List<? extends Node> nodes) {

@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import jkumensa.api.data.MensaCategoryData;
-import jkumensa.parser.data.MensaDayData;
+import jkumensa.parser.MensaDayData;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

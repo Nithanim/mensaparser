@@ -1,4 +1,4 @@
-package jkumensa.parser.i;
+package jkumensa.parser;
 
 import java.time.LocalDate;
 import java.util.List;

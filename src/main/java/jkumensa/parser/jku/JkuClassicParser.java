@@ -14,7 +14,7 @@ import jkumensa.api.MensaFoodCharacteristic;
 import jkumensa.api.data.MensaCategoryData;
 import jkumensa.api.data.MensaMealData;
 import jkumensa.api.AllergyCodeSet;
-import jkumensa.parser.data.MensaDayData;
+import jkumensa.parser.MensaDayData;
 import jkumensa.parser.ex.MensaAllergyCodeParsingException;
 import jkumensa.parser.ex.MensaMealParsingException;
 import org.jsoup.nodes.Document;

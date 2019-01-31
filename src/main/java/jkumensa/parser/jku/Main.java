@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import jkumensa.api.data.MensaCategoryData;
 import jkumensa.api.data.MensaMealData;
-import jkumensa.parser.data.MensaDayData;
+import jkumensa.parser.MensaDayData;
 import jkumensa.parser.khg.KhgMensaParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

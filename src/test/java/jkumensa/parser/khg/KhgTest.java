@@ -9,7 +9,7 @@ import java.util.List;
 import jkumensa.api.AllergyCodeSet;
 import jkumensa.api.data.MensaCategoryData;
 import jkumensa.api.data.MensaMealData;
-import jkumensa.parser.data.MensaDayData;
+import jkumensa.parser.MensaDayData;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Assert;

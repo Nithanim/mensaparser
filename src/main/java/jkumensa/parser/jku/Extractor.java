@@ -2,6 +2,7 @@ package jkumensa.parser.jku;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +33,7 @@ public class Extractor {
     public static Set<MensaFoodCharacteristic> foodCharacteristicFromImg(List<Element> imgs) {
         return imgs.stream()
             .map(img -> foodCharacteristicFromImg(img))
+            .filter(Objects::nonNull)
             .collect(Collectors.toCollection(() -> EnumSet.noneOf(MensaFoodCharacteristic.class)));
     }
 
@@ -41,24 +43,18 @@ public class Extractor {
         }
 
         String alt = img.attr("alt").toLowerCase();
-        if (alt.contains("vegetarisch")) {
-            return MensaFoodCharacteristic.VEGETARIAN;
-        } else if (alt.equals("asc")) {
+        if (alt.equals("asc")) {
             return MensaFoodCharacteristic.ASC;
-        } else if (alt.equals("msc")) {
+        } else if (alt.equals("msc") || alt.contains("nachhaltige fischerei")) {
             return MensaFoodCharacteristic.MSC;
+        } else if (alt.contains("mweltzeichen")) {
+            return MensaFoodCharacteristic.AUSTRIAN_ENVIRONMENT;
         } else if (alt.contains("vegan")) {
             return MensaFoodCharacteristic.VEGAN;
-        } else if (alt.contains("fisch")) {
-            return MensaFoodCharacteristic.FISH;
-        } else if (alt.contains("nachhaltige fischerei")) {
-            return MensaFoodCharacteristic.MSC;
-        } else if (alt.contains("brainfood")) {
-            return MensaFoodCharacteristic.BRAINFOOD;
-        } else if (alt.contains("umweltzeichen")) {
-            return MensaFoodCharacteristic.AUSTRIAN_ENVIRONMENT;
+        } else if (alt.contains("vegetarisch")) {
+            return MensaFoodCharacteristic.VEGETARIAN;
         } else {
-            return MensaFoodCharacteristic.UNKNOWN;
+            return null;
         }
     }
 

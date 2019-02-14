@@ -53,7 +53,12 @@ public class JkuChoiceSubparser {
     private MensaCategoryData parseSubCategory(List<? extends Node> raw) {
         ListIterator<? extends Node> it = raw.listIterator();
 
-        String title = ((Element) it.next()).text();
+        String title = "";
+        Node n = it.next();
+        if (n instanceof Element) {
+            // title is not always included (e.g. holidays)
+            title = ((Element) n).text();
+        }
         it.remove();
 
         List<List<Node>> groups = Cleaner.groupByDiscardingTag("br", raw);

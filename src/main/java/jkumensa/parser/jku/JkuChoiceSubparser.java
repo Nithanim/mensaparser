@@ -58,8 +58,8 @@ public class JkuChoiceSubparser {
         if (n instanceof Element) {
             // title is not always included (e.g. holidays)
             title = ((Element) n).text();
+            it.remove();
         }
-        it.remove();
 
         List<List<Node>> groups = Cleaner.groupByDiscardingTag("br", raw);
 

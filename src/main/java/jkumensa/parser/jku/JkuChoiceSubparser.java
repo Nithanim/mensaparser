@@ -104,7 +104,7 @@ public class JkuChoiceSubparser {
             textWithoutPrices.append(fulltext.substring(pos, fulltext.length()).trim());
         }
 
-        String text = textWithoutPrices.toString().trim();
+        String text = Extractor.trimRightGarbage(textWithoutPrices.toString().trim());
 
         return new MensaMealData(text, -1, -1, price, allergyCodes, foodCharacteristics);
     }

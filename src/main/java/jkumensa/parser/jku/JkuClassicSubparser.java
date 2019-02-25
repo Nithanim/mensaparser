@@ -71,7 +71,9 @@ public class JkuClassicSubparser {
                 AllergyCodeSet allergyCodes = new AllergyCodeSet();
                 Set<MensaFoodCharacteristic> foodCharacteristics = Extractor.foodCharacteristicFromImg(e.select("img"));
 
-                String title = Extractor.extractAndRemoveAllergyCodes(fulltext, allergyCodes);
+                String title = Extractor.trimRightGarbage(
+                    Extractor.extractAndRemoveAllergyCodes(fulltext, allergyCodes)
+                );
 
                 meals.add(new MensaMealData(title, -1, -1, -1, allergyCodes, foodCharacteristics));
             } catch (Exception ex) {

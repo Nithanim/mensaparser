@@ -79,4 +79,16 @@ public class Extractor {
         String title = textWithoutAllergyCodes.toString().trim();
         return title;
     }
+    
+    public static String trimRightGarbage(String s) {
+        for(int i = s.length()-1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if(c == ' ' || c == ',') {
+                
+            } else {
+                return s.substring(0, i+1);
+            }
+        }
+        return "";
+    }
 }
